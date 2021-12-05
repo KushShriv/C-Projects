@@ -37,6 +37,95 @@ void add_student(){
 	i = i + 1;
 }
 
+void find_rl(){
+	int x;
+	printf("Enter the Roll Number of the student\n");
+	scanf("%d", &x);
+	for (int j = 1; j <= i; j++) {
+		if (x == st[i].roll) {
+			printf("The Students Details are\n");
+			printf("The First name is %s\n", st[i].fname);
+			printf("The Last name is %s\n", st[i].lname);
+			printf("The CGPA is %f\n", st[i].cgpa);
+			printf("Enter the course ID of each course\n");
+		}
+		for (int j = 0; j < 5; j++) {
+			printf("The course ID are %d\n", st[i].cid[j]);
+		}
+		break;
+	}
+}
+
+void find_fn(){
+	char a[50];
+	printf("Enter the First Name of the student\n");
+	scanf("%s", a);
+	int c = 0;
+
+	for (int j = 1; j <= i; j++) {
+		if (!strcmp(st[j].fname, a)) {
+
+			printf("The Students Details are\n");
+			printf("The First name is %s\n", st[i].fname);
+			printf("The Last name is %s\n", st[i].lname);
+			printf("The Roll Number is %d\n ", st[i].roll);
+			printf("The CGPA is %f\n", st[i].cgpa);
+			printf("Enter the course ID of each course\n");
+
+			for (int j = 0; j < 5; j++) {
+				printf("The course ID are %d\n", st[i].cid[j]);
+			}
+			c = 1;
+		}
+		else
+			printf("The First Name not Found\n");
+	}
+}
+
+void find_c(){
+	int id;
+	printf("Enter the course ID \n");
+	scanf("%d", &id);
+	int c = 0;
+
+	for (int j = 1; j <= i; j++) {
+		for (int d = 0; d < 5; d++) {
+			if (id == st[j].cid[d]) {
+
+				printf("The Students Details are\n");
+				printf("The First name is %s\n", st[i].fname);
+				printf("The Last name is %s\n", st[i].lname);
+				printf("The Roll Number is %d\n ", st[i].roll);
+				printf("The CGPA is %f\n", st[i].cgpa);
+				c = 1;
+				break;
+			}
+			else
+				printf("The First Name not Found\n");
+		}
+	}
+}
+
+void tot_s(){
+	printf("The total number of Student is %d\n", i);
+	printf("\n you can have a max of 50 students\n");
+	printf("you can have %d more students\n", 50 - i);
+}
+
+void del_s(){
+	int a;
+	printf("Enter the Roll Number which you want to delete\n");
+	scanf("%d", &a);
+	for (int j = 1; j <= i; j++) {
+		if (a == st[j].roll) {
+			for (int k = j; k < 49; k++)
+				st[k] = st[k + 1];
+			i--;
+		}
+	}
+	printf("The Roll Number is removed Successfully\n");
+}
+
 void up_s(){
 	printf("Enter the roll number to update the entry : ");
 	long int x;
