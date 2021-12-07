@@ -16,6 +16,48 @@ struct Patient {
 	int age; 
 }; 
 
+void printHospital(struct Hospital hosp) { 
+	printf("Hospital Name: %s\n", hosp.name); 
+	printf("City: %s\n", hosp.city); 
+	printf("Total Beds: %d\n", hosp.beds); 
+	printf("Price per Bed: $%.2f\n", hosp.price); 
+	printf("Rating: %.1f\n", hosp.rating); 
+	printf("Reviews: %d\n", hosp.reviews); 
+	printf("\n"); 
+} 
+
+void printHospitalsInCity(struct Hospital hospitals[]) {
+	char city[50]; 
+	int hospitalsFound = 0; 
+
+	printf("Enter city name (X, Y or Z): "); 
+	scanf("%s", city); 
+	printf("Hospitals in %s:\n", city); 
+
+	for (int i = 0; i < 5; i++) { 
+		if (strcasecmp(hospitals[i].city, city) == 0) { 
+			printf("Hospital Name: %s\n", hospitals[i].name); 
+			printf("City: %s\n", hospitals[i].city); 
+			printf("Total Beds: %d\n", hospitals[i].beds); 
+			printf("Price per Bed: $%.2f\n", hospitals[i].price); 
+			printf("Rating: %.1f\n", hospitals[i].rating); 
+			printf("Reviews: %d\n", hospitals[i].reviews); 
+			printf("\n"); 
+			hospitalsFound++; 
+		} 
+	} 
+
+	if (hospitalsFound == 0) { 
+		printf("No hospitals found in %s\n", city); 
+	} 
+} 
+
+void printPatient(struct Patient patient) { 
+	printf("Patient Name: %s\n", patient.name); 
+	printf("Age: %d\n", patient.age); 
+	printf("\n"); 
+} 
+
 int main() { 
 	struct Hospital hospitals[5] = { { "Hospital A", "X", 100, 250.0, 4.5, 100 }, 
                                     { "Hospital B", "Y", 150, 200.0, 4.2, 80 }, 
@@ -44,7 +86,19 @@ int main() {
 	int choice; 
 	char city[50]; 
 
-	do {
+	do { 
+		printf("\n\n\n*********** Hospital Management System Menu:************\n\n"); 
+		printf("1. Printing Hospital Data\n"); 
+		printf("2. Printing Patients Data\n"); 
+		printf("3. Sorting Hospitals by Beds Price\n"); 
+		printf("4. Sorting Hospitals by Available Beds\n"); 
+		printf("5. Sorting Hospitals by Name\n"); 
+		printf("6. Sorting Hospitals by Rating and Reviews\n"); 
+		printf("7. Print Hospitals in a Specific City\n"); 
+		printf("8. Exit\n\n"); 
+		printf("Enter your choice: "); 
+		scanf("%d", &choice); 
+
 		switch (choice) { 
 		case 1: 
 			printf("\nPrinting Hospital Data:\n\n"); 
