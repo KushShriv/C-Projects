@@ -26,6 +26,42 @@ void printHospital(struct Hospital hosp) {
 	printf("\n"); 
 } 
 
+void sortByPrice(struct Hospital hospitals[], int n) { 
+	for (int i = 0; i < n - 1; i++) { 
+		for (int j = 0; j < n - i - 1; j++) { 
+			if (hospitals[j].price > hospitals[j + 1].price) { 
+				struct Hospital temp = hospitals[j]; 
+				hospitals[j] = hospitals[j + 1]; 
+				hospitals[j + 1] = temp; 
+			} 
+		} 
+	} 
+} 
+
+void sortByName(struct Hospital hospitals[], int n) { 
+	for (int i = 0; i < n - 1; i++) { 
+		for (int j = 0; j < n - i - 1; j++) { 
+			if (strcmp(hospitals[j].name, hospitals[j + 1].name) > 0) { 
+				struct Hospital temp = hospitals[j]; 
+				hospitals[j] = hospitals[j + 1]; 
+				hospitals[j + 1] = temp; 
+			} 
+		} 
+	} 
+} 
+
+void sortByRating(struct Hospital hospitals[], int n) { 
+	for (int i = 0; i < n - 1; i++) { 
+		for (int j = 0; j < n - i - 1; j++) { 
+			if (hospitals[j].rating * hospitals[j].reviews < hospitals[j + 1].rating * hospitals[j + 1].reviews) { 
+				struct Hospital temp = hospitals[j]; 
+				hospitals[j] = hospitals[j + 1]; 
+				hospitals[j + 1] = temp; 
+			} 
+		} 
+	} 
+} 
+
 void printHospitalsInCity(struct Hospital hospitals[]) {
 	char city[50]; 
 	int hospitalsFound = 0; 
@@ -49,6 +85,18 @@ void printHospitalsInCity(struct Hospital hospitals[]) {
 
 	if (hospitalsFound == 0) { 
 		printf("No hospitals found in %s\n", city); 
+	} 
+} 
+
+void sortByBeds(struct Hospital hospitals[], int n) { 
+	for (int i = 0; i < n - 1; i++) { 
+		for (int j = 0; j < n - i - 1; j++) { 
+			if (hospitals[j].beds < hospitals[j + 1].beds) { 
+				struct Hospital temp = hospitals[j]; 
+				hospitals[j] = hospitals[j + 1]; 
+				hospitals[j + 1] = temp; 
+			} 
+		} 
 	} 
 } 
 
