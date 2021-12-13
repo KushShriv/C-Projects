@@ -23,6 +23,50 @@ struct User {
 	char password[50]; 
 }; 
 
+int loginUser(struct User users[], int numUsers, char username[], char password[]) { 
+	for (int i = 0; i < numUsers; i++) { 
+		if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) { 
+			return i;
+		} 
+	} 
+	return -1;
+} 
+ 
+void bookTicket(struct Bus buses[], int numBuses, struct Passenger passengers[], int* numPassengers, int userId) { 
+	printf("\nEnter Bus Number: "); 
+	int busNumber; 
+	scanf("%d", &busNumber); 
+
+	int busIndex = -1; 
+	for (int i = 0; i < numBuses; i++) { 
+		if (buses[i].busNumber == busNumber) { 
+			busIndex = i; 
+			break; 
+		} 
+	} 
+
+	if (busIndex == -1) { 
+		printf("Bus with Bus Number %d not found.\n", busNumber); 
+	} 
+	else if (buses[busIndex].availableSeats == 0) { 
+		printf("Sorry, the bus is fully booked.\n"); 
+	} 
+	else { 
+		printf("Enter Passenger Name: "); 
+		scanf("%s", passengers[*numPassengers].name); 
+
+		printf("Enter Passenger Age: "); 
+		scanf("%d", &passengers[*numPassengers].age); 
+
+		passengers[*numPassengers].seatNumber = buses[busIndex].totalSeats - buses[busIndex].availableSeats + 1; 
+		passengers[*numPassengers].busNumber = busNumber;
+		buses[busIndex].availableSeats--; 
+
+		printf("Ticket booked successfully!\n"); 
+		(*numPassengers)++; 
+	} 
+} 
+
 int main() { 
 	struct User users[5] = { 
 		{ "user1", "password1" }, { "user2", "password2" }, 
