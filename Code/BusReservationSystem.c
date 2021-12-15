@@ -23,6 +23,22 @@ struct User {
 	char password[50]; 
 }; 
 
+void displayMainMenu() { 
+	printf("\n=== Bus Reservation System ===\n"); 
+	printf("1. Login\n"); 
+	printf("2. Exit\n"); 
+	printf("Enter your choice: "); 
+} 
+
+void displayUserMenu() { 
+	printf("\n=== User Menu ===\n"); 
+	printf("1. Book a Ticket\n"); 
+	printf("2. Cancel a Ticket\n"); 
+	printf("3. Check Bus Status\n"); 
+	printf("4. Logout\n"); 
+	printf("Enter your choice: "); 
+} 
+
 int loginUser(struct User users[], int numUsers, char username[], char password[]) { 
 	for (int i = 0; i < numUsers; i++) { 
 		if (strcmp(users[i].username, username) == 0 && strcmp(users[i].password, password) == 0) { 
@@ -65,6 +81,46 @@ void bookTicket(struct Bus buses[], int numBuses, struct Passenger passengers[],
 		printf("Ticket booked successfully!\n"); 
 		(*numPassengers)++; 
 	} 
+} 
+
+void cancelTicket(struct Bus buses[], int numBuses, struct Passenger passengers[], int* numPassengers, int userId) { 
+	printf("\nEnter Passenger Name: "); 
+	char name[50]; 
+	scanf("%s", name); 
+
+	int found = 0; 
+	for (int i = 0; i < *numPassengers; i++) { 
+		if (strcmp(passengers[i].name, name) == 0 && passengers[i].busNumber == buses[userId].busNumber) {
+			int busIndex = -1; 
+			for (int j = 0; j < numBuses; j++) { 
+				if (buses[j].busNumber == passengers[i].busNumber) { 
+					busIndex = j; 
+					break; 
+				} 
+			} 
+			buses[busIndex].availableSeats++; 
+
+			for (int j = i; j < (*numPassengers) - 1; j++) { 
+				passengers[j] = passengers[j + 1]; 
+			} 
+			(*numPassengers)--; 
+			found = 1; 
+			printf("Ticket canceled successfully!\n"); 
+			break; 
+		} 
+	} 
+	if (!found) { 
+		printf("Passenger with name %s not found on this bus.\n", name); 
+	} 
+} 
+
+void checkBusStatus(struct Bus buses[], int numBuses, int userId) { 
+	printf("\nBus Number: %d\n", buses[userId].busNumber); 
+	printf("Source: %s\n", buses[userId].source); 
+	printf("Destination: %s\n", buses[userId].destination); 
+	printf("Total Seats: %d\n", buses[userId].totalSeats); 
+	printf("Available Seats: %d\n", buses[userId].availableSeats); 
+	printf("Fare: %.2f\n", buses[userId].fare); 
 } 
 
 int main() { 
