@@ -2,6 +2,49 @@
 #include <stdlib.h>
 #include <string.h>
 
+void reverseString(char *);
+
+char* decimalToBinary(int decimal){
+    char* binary = (char*)malloc(33);
+    if (binary == NULL) {
+        printf("Memory allocation failed.\n");
+        exit(1);
+    }
+
+    int i = 0;
+    while (decimal) {
+        binary[i++] = '0' + (decimal & 1);
+        decimal >>= 1;
+    }
+    if (i == 0) {
+        binary[i++] = '0';
+    }
+    binary[i] = '\0';
+    reverseString(binary);
+    return binary;
+}
+
+int binaryToDecimal(char binary[]){
+    int decimal = 0;
+    int length = strlen(binary);
+    for (int i = 0; i < length; i++) {
+        decimal = decimal * 2 + (binary[i] - '0');
+    }
+    return decimal;
+}
+
+void reverseString(char* str){
+    int i = 0;
+    int j = strlen(str) - 1;
+    while (i < j) {
+        char c = str[i];
+        str[i] = str[j];
+        str[j] = c;
+        i++;
+        j--;
+    }
+}
+
 int main(){
     int choice;
     while (1) {
