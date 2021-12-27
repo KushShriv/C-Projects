@@ -33,6 +33,50 @@ int binaryToDecimal(char binary[]){
     return decimal;
 }
 
+char* hexadecimalToBinary(char hex[]){
+    unsigned int hexNum;
+    sscanf(hex, "%x", &hexNum);
+    char binary[33] = "";
+    int i = 0;
+    while (hexNum) {
+        binary[i++] = '0' + hexNum % 2;
+        hexNum /= 2;
+    }
+    if (i == 0) {
+        binary[i++] = '0';
+    }
+    binary[i] = '\0';
+    reverseString(binary);
+
+    return strdup(binary);
+}
+
+char* binaryToHexadecimal(char binary[]){
+    int length = strlen(binary);
+    int padding = (4 - (length % 4)) % 4;
+    char paddedBinary[129];
+    memset(paddedBinary, '0', padding);
+    strcpy(paddedBinary + padding, binary);
+    char* binaryHexDigits[] = { "0000", "0001", "0010", "0011", "0100", "0101",
+                                "0110", "0111", "1000", "1001", "1010", "1011",
+                                "1100", "1101", "1110", "1111" };
+    char hexadecimal[33] = "";
+    for (int i = 0; i < length + padding; i += 4) {
+        char group[5];
+        strncpy(group, paddedBinary + i, 4);
+        group[4] = '\0';
+        for (int j = 0; j < 16; j++) {
+            if (strcmp(group, binaryHexDigits[j]) == 0) {
+                char hexDigit[2];
+                sprintf(hexDigit, "%X", j);
+                strcat(hexadecimal, hexDigit);
+                break;
+            }
+        }
+    }
+    return strdup(hexadecimal);
+}
+
 void reverseString(char* str){
     int i = 0;
     int j = strlen(str) - 1;
