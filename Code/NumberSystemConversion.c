@@ -33,6 +33,25 @@ int binaryToDecimal(char binary[]){
     return decimal;
 }
 
+char* decimalToOctal(int decimal){
+    char* octal = (char*)malloc(12);
+    if (octal == NULL) {
+        printf("Memory allocation failed.\n");
+        exit(1);
+    }
+    sprintf(octal, "%o", decimal);
+    return octal;
+}
+
+int octalToDecimal(char octal[]){
+    int decimal = 0;
+    int length = strlen(octal);
+    for (int i = 0; i < length; i++) {
+        decimal = decimal * 8 + (octal[i] - '0');
+    }
+    return decimal;
+}
+
 char* hexadecimalToBinary(char hex[]){
     unsigned int hexNum;
     sscanf(hex, "%x", &hexNum);
