@@ -153,3 +153,74 @@ void load(){
     }
     getch();
 }
+void Down(){
+    int i;
+    for(i=0; i<=(head.y-bend[bend_no].y)&&len<length; i++){
+        GotoXY(head.x,head.y-i);
+        {
+            if(len==0)
+                printf("v");
+            else
+                printf("*");
+        }
+        body[len].x=head.x;
+        body[len].y=head.y-i;
+        len++;
+    }
+    Bend();
+    if(!kbhit())
+        head.y++;
+}
+void Left(){
+    int i;
+    for(i=0; i<=(bend[bend_no].x-head.x)&&len<length; i++){
+        GotoXY((head.x+i),head.y);
+        {
+            if(len==0)
+                printf("<");
+            else
+                printf("*");
+        }
+        body[len].x=head.x+i;
+        body[len].y=head.y;
+        len++;
+    }
+    Bend();
+    if(!kbhit())
+        head.x--;
+}
+void Right(){
+    int i;
+    for(i=0; i<=(head.x-bend[bend_no].x)&&len<length; i++){
+        body[len].x=head.x-i;
+        body[len].y=head.y;
+        GotoXY(body[len].x,body[len].y);
+        {
+            if(len==0)
+                printf(">");
+            else
+                printf("*");
+        }
+        len++;
+    }
+    Bend();
+    if(!kbhit())
+        head.x++;
+}
+void Up(){
+    int i;
+    for(i=0; i<=(bend[bend_no].y-head.y)&&len<length; i++){
+        GotoXY(head.x,head.y+i);{
+            if(len==0)
+                printf("^");
+            else
+                printf("*");
+        }
+        body[len].x=head.x;
+        body[len].y=head.y+i;
+        len++;
+    }
+    Bend();
+    if(!kbhit())
+        head.y--;
+}
