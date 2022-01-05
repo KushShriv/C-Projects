@@ -171,6 +171,28 @@ void Down(){
     if(!kbhit())
         head.y++;
 }
+void Food(){
+    if(head.x==food.x&&head.y==food.y){
+        length++;
+        time_t a;
+        a=time(0);
+        srand(a);
+        food.x=rand()%70;
+        if(food.x<=10)
+            food.x+=11;
+        food.y=rand()%30;
+        if(food.y<=10)
+            food.y+=11;
+    }
+    else if(food.x==0){
+        food.x=rand()%70;
+        if(food.x<=10)
+            food.x+=11;
+        food.y=rand()%30;
+        if(food.y<=10)
+            food.y+=11;
+    }
+}
 void Left(){
     int i;
     for(i=0; i<=(bend[bend_no].x-head.x)&&len<length; i++){
@@ -257,6 +279,34 @@ void Bend(){
                 }
         }
     }
+}
+void Boarder(){
+    system("cls");
+    int i;
+    GotoXY(food.x,food.y);
+    printf("F");
+    for(i=10; i<71; i++){
+        GotoXY(i,10);
+        printf("!");
+        GotoXY(i,30);
+        printf("!");
+    }
+    for(i=10; i<31; i++){
+        GotoXY(10,i);
+        printf("!");
+        GotoXY(70,i);
+        printf("!");
+    }
+}
+void Print(){
+    printf("\tWelcome to the mini Snake game.(press any key to continue)\n");
+    getch();
+    system("cls");
+    printf("\tGame instructions:\n");
+    printf("\n-> Use arrow keys to move the snake.\n\n-> You will be provided foods at the several coordinates of the screen which you have to eat. Everytime you eat a food the length of the snake will be increased by 1 element and thus the score.\n\n-> Here you are provided with three lives. Your life will decrease as you hit the wall or snake's body.\n\n-> YOu can pause the game in its middle by pressing any key. To continue the paused game press any other key once again\n\n-> If you want to exit press esc. \n");
+    printf("\n\nPress any key to play game...");
+    if(getch()==27)
+        exit(0);
 }
 void Up(){
     int i;
