@@ -171,6 +171,36 @@ void Down(){
     if(!kbhit())
         head.y++;
 }
+void Delay(long double k){
+    Score();
+    long double i;
+    for(i=0; i<=(10000000); i++);
+}
+void ExitGame(){
+    int i,check=0;
+    for(i=4; i<length; i++){
+        if(body[0].x==body[i].x&&body[0].y==body[i].y)
+            check++;
+        if(i==length||check!=0)
+            break;
+    }
+    if(head.x<=10||head.x>=70||head.y<=10||head.y>=30||check!=0){
+        life--;
+        if(life>=0){
+            head.x=25;
+            head.y=20;
+            bend_no=0;
+            head.direction=RIGHT;
+            Move();
+        }
+        else{
+            system("cls");
+            printf("All lives completed\nBetter Luck Next Time!!!\nPress any key to quit the game\n");
+            record();
+            exit(0);
+        }
+    }
+}
 void Food(){
     if(head.x==food.x&&head.y==food.y){
         length++;
@@ -307,6 +337,60 @@ void Print(){
     printf("\n\nPress any key to play game...");
     if(getch()==27)
         exit(0);
+}
+void record(){
+    char plname[20],nplname[20],cha,c;
+    int i,j,px;
+    FILE *info;
+    info=fopen("record.txt","a+");
+    getch();
+    system("cls");
+    printf("Enter your name\n");
+    scanf("%[^\n]",plname);
+    for(j=0; plname[j]!='\0'; j++) {
+        nplname[0]=toupper(plname[0]);
+        if(plname[j-1]==' '){
+            nplname[j]=toupper(plname[j]);
+            nplname[j-1]=plname[j-1];
+        }
+        else nplname[j]=plname[j];
+    }
+    nplname[j]='\0';
+    fprintf(info,"Player Name :%s\n",nplname);
+
+    time_t mytime;
+    mytime = time(NULL);
+    fprintf(info,"Played Date:%s",ctime(&mytime));
+    fprintf(info,"Score:%d\n",px=Scoreonly());
+    for(i=0; i<=50; i++)
+        fprintf(info,"%c",'_');
+    fprintf(info,"\n");
+    fclose(info);
+    printf("Wanna see past records press 'y'\n");
+    cha=getch();
+    system("cls");
+    if(cha=='y'){
+        info=fopen("record.txt","r");
+        do{
+            putchar(c=getc(info));
+        } while(c!=EOF);
+    }
+    fclose(info);
+}
+int Score(){
+    int score;
+    GotoXY(20,8);
+    score=length-5;
+    printf("SCORE : %d",(length-5));
+    score=length-5;
+    GotoXY(50,8);
+    printf("Life : %d",life);
+    return score;
+}
+int Scoreonly(){
+    int score=Score();
+    system("cls");
+    return score;
 }
 void Up(){
     int i;
