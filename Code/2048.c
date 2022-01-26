@@ -27,6 +27,49 @@ int findlen(int n) {
     return len; 
 } 
 
+void print() { 
+    int i, j, k, len1; 
+
+    printf("\n\t\t\t\t\t===============2048==============\n"); 
+    printf("\t\t\t\t\tYOUR SCORE=%d\n", score); 
+    if (score < highscore) { 
+        printf("\t\t\t\t\tHIGH SCORE=%d\n", highscore); 
+    } 
+    else { 
+        highscore = score; 
+        printf("\t\t\t\t\tHIGH SCORE=%d\n", highscore); 
+    } 
+    printf("\t\t\t\t\t---------------------------------\n"); 
+    for (i = 0; i < 4; i++) { 
+        for (j = 0; j < 4; j++) { 
+            if (j == 0) { 
+                printf("\t\t\t\t\t|"); 
+            } 
+            if (arr[i][j] != 0) { 
+                len1 = findlen(arr[i][j]); 
+                for (k = 0; k < 4 - len1; k++) { 
+                    printf(" "); 
+                } 
+                printf("%d", arr[i][j]); 
+                for (k = 0; k < 4 - len1; k++) { 
+                    printf(" "); 
+                } 
+                printf("|"); 
+            } 
+            else { 
+                printf("    |"); 
+            } 
+        } 
+        printf("\n"); 
+        if (i != 3) { 
+            printf("\t\t\t\t\t---------------------------------\n"); 
+        } 
+    } 
+    printf("\t\t\t\t\t---------------------------------\n"); 
+    printf("\t\t\t\t\tPREV-> P\t\tRESTART-> R\t\tEXIT-> U\n"); 
+    printf("\t\t\t\t\tENTER YOUR CHOICE -> W,S,A,D\n"); 
+} 
+
 void movevalue(int k) {
     for (int i = k; i < 3; i++) { 
         if (c[i] == 0) { 
@@ -45,6 +88,59 @@ void rupdate() {
         } 
     } 
     movevalue(0); 
+} 
+
+void createprev(int*** p) { 
+    FILE* ptr = fopen("hstr.txt", "a"); 
+    fprintf(ptr, "%d ", score); 
+    fclose(ptr); 
+
+    if (count == MAXPREV) { 
+        for (int i = MAXPREV; i > 0; i--) { 
+            for (int j = 0; j < 4; j++) { 
+                for (int k = 0; k < 4; k++) { 
+                    p[i][j][k] = p[i - 1][j][k]; 
+                } 
+            } 
+        } 
+    } 
+
+    for (int i = 0; i < 4; i++) { 
+        for (int j = 0; j < 4; j++) { 
+            p[0][i][j] = arr[i][j]; 
+        } 
+    } 
+    count++; 
+} 
+
+void updatearrtoprev(int*** p) {
+    if (count == 0) { 
+        printf("\n******FURTHER MORE PREV NOT POSSIBLE********\n"); 
+        return; 
+    } 
+
+    FILE* ptr = fopen("hstr.txt", "r"); 
+    int data; 
+    for (int i = 0; i < count; i++) { 
+        fscanf(ptr, "%d", &data); 
+    } 
+    score = data; 
+    fclose(ptr); 
+
+    for (int i = 0; i < 4; i++) { 
+        for (int j = 0; j < 4; j++) { 
+            arr[i][j] = p[0][i][j]; 
+        } 
+    } 
+
+    for (int i = 0; i < MAXPREV - 1; i++) { 
+        for (int j = 0; j < 4; j++) { 
+            for (int k = 0; k < 4; k++) { 
+                p[i][j][k] = p[i + 1][j][k]; 
+            } 
+        } 
+    } 
+    count--; 
 } 
 
 int main(){ 
