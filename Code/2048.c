@@ -79,6 +79,16 @@ void movevalue(int k) {
     } 
 } 
 
+void addrandomno() { 
+    srand(time(NULL)); 
+    int i, j; 
+    do { 
+        i = rand() % 4; 
+        j = rand() % 4; 
+    } while (arr[i][j] != 0); 
+    arr[i][j] = (rand() % 10) == 0 ? 4 : 2; 
+} 
+
 void rupdate() { 
     for (int i = 3; i > 0; i--) { 
         if (c[i] == c[i - 1] && c[i] != 0) { 
@@ -141,6 +151,17 @@ void updatearrtoprev(int*** p) {
         } 
     } 
     count--; 
+} 
+
+void resetgame() {
+    for (int i = 0; i < 4; i++) { 
+        for (int j = 0; j < 4; j++) { 
+            arr[i][j] = 0; 
+        } 
+    } 
+    system("cls"); 
+    score = 0; 
+    addrandomno(); 
 } 
 
 int main(){ 
